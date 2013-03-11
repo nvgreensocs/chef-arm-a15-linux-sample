@@ -54,3 +54,27 @@ bash "Download the Eclipse project." do
   EOH
   environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
 end
+
+bash "Download the Kernel sources." do
+  code <<-EOH
+    cd #{node[:prefix]}/GSDEMO
+    if [ ! -e "#{node[:prefix]}/GSDEMO/linux-demo" ]; then
+    wget http://www.greensocs.com/files/linux-demo.tar.bz2
+    tar -xf linux-demo.tar.bz2
+    rm linux-demo.tar.bz2
+    fi
+  EOH
+  environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
+end
+
+bash "Download the ARM toolchain." do
+  code <<-EOH
+    cd #{node[:prefix]}/GSDEMO
+    if [ ! -e "#{node[:prefix]}/GSDEMO/arm-2012.03" ]; then
+    wget http://www.greensocs.com/files/arm-2012.03-57-arm-none-linux-gnueabi-i686-pc-linux-gnu.tar.bz2
+    tar -xf arm-2012.03-57-arm-none-linux-gnueabi-i686-pc-linux-gnu.tar.bz2
+    rm arm-2012.03-57-arm-none-linux-gnueabi-i686-pc-linux-gnu.tar.bz2
+    fi
+  EOH
+  environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
+end

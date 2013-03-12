@@ -14,11 +14,13 @@
 
 bash "Download precompiled Sample Linux Image" do
   code <<-EOH
-    mkdir -p #{node[:prefix]}/GSDEMO
-    cd #{node[:prefix]}/GSDEMO
-    wget http://www.greensocs.com/files/gsdemo.tar
-    tar -xf gsdemo.tar
-    rm gsdemo.tar
+    if [ ! -e #{node[:prefix]}/GSDEMO/zImage ]; then
+        mkdir -p #{node[:prefix]}/GSDEMO
+        cd #{node[:prefix]}/GSDEMO
+        wget http://www.greensocs.com/files/gsdemo.tar
+        tar -xf gsdemo.tar
+        rm gsdemo.tar
+    fi
   EOH
   environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
 end
@@ -47,21 +49,11 @@ end
 
 bash "Download the Eclipse project." do
   code <<-EOH
-    cd #{node[:prefix]}/GSDEMO
-    wget http://www.greensocs.com/files/gsdemo_eclipse.tar.gz
-    tar -xf gsdemo_eclipse.tar.gz
-    rm gsdemo_eclipse.tar.gz
-  EOH
-  environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
-end
-
-bash "Download the Kernel sources." do
-  code <<-EOH
-    cd #{node[:prefix]}/GSDEMO
-    if [ ! -e "#{node[:prefix]}/GSDEMO/linux-demo" ]; then
-    wget http://www.greensocs.com/files/linux-demo.tar.bz2
-    tar -xf linux-demo.tar.bz2
-    rm linux-demo.tar.bz2
+    if [ ! -e "#{node[:prefix]}/GSDEMO/eclipse" ]; then
+        cd #{node[:prefix]}/GSDEMO
+        wget http://www.greensocs.com/files/gsdemo_eclipse.tar.gz
+        tar -xf gsdemo_eclipse.tar.gz
+        rm gsdemo_eclipse.tar.gz
     fi
   EOH
   environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
@@ -74,6 +66,18 @@ bash "Download the ARM toolchain." do
     wget http://www.greensocs.com/files/arm-2012.03-57-arm-none-linux-gnueabi-i686-pc-linux-gnu.tar.bz2
     tar -xf arm-2012.03-57-arm-none-linux-gnueabi-i686-pc-linux-gnu.tar.bz2
     rm arm-2012.03-57-arm-none-linux-gnueabi-i686-pc-linux-gnu.tar.bz2
+    fi
+  EOH
+  environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
+end
+
+bash "Download the Kernel sources." do
+  code <<-EOH
+    cd #{node[:prefix]}/GSDEMO
+    if [ ! -e "#{node[:prefix]}/GSDEMO/linux-demo" ]; then
+    wget http://www.greensocs.com/files/linux-demo.tar.bz2
+    tar -xf linux-demo.tar.bz2
+    rm linux-demo.tar.bz2
     fi
   EOH
   environment ({ 'http_proxy' => Chef::Config[:http_proxy] })

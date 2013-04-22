@@ -12,6 +12,8 @@
 # 
 # ENDLICENSETEXT
 
+#The project is in /vagrant/GSDEMO/eclipse
+
 bash "Download precompiled Sample Linux Image" do
   code <<-EOH
     if [ ! -e #{node[:prefix]}/GSDEMO/zImage ]; then
@@ -24,28 +26,6 @@ bash "Download precompiled Sample Linux Image" do
   EOH
   environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
 end
-
-#bash "Checkout the Kernel source." do
-#  code <<-EOH
-#    cd #{node[:prefix]}
-#    mkdir ARM-A15-SAMPLE
-#    cd ARM-A15-SAMPLE
-#    git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
-#    git reset --hard v3.8-rc7
-#  EOH
-#  environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
-#end
-
-#bash "Apply the patch-set." do
-#  code <<-EOH
-#    cd #{node[:prefix]}/ARM-A15-SAMPLE/linux-stable
-#    wget http://www.greensocs.com/files/kernel-patches/0001-sc-counter-add-sc-#counter-driver.patch
-#    git am 0001-sc-counter-add-sc-counter-driver.patch
-#  EOH
-#  environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
-#end
-
-#The project is in /vagrant/GSDEMO/eclipse
 
 bash "Download the Eclipse project." do
   code <<-EOH

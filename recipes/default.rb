@@ -19,9 +19,9 @@ bash "Download precompiled Sample Linux Image" do
     if [ ! -e #{node[:prefix]}/GSDEMO/zImage ]; then
         mkdir -p #{node[:prefix]}/GSDEMO
         cd #{node[:prefix]}/GSDEMO
-        wget http://www.greensocs.com/files/gsdemo.tar
-        tar -xf gsdemo.tar
-        rm gsdemo.tar
+        wget http://www.greensocs.com/files/gsdemo.tar.gz
+        tar -xf gsdemo.tar.gz
+        rm gsdemo.tar.gz
     fi
   EOH
   environment ({ 'http_proxy' => Chef::Config[:http_proxy] })

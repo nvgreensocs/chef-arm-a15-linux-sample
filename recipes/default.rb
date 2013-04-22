@@ -62,3 +62,17 @@ bash "Download the Kernel sources." do
   EOH
   environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
 end
+
+bash "Create the hostshare." do
+  code <<-EOH
+    cd #{node[:prefix]}/GSDEMO
+    if [ ! -e "#{node[:prefix]}/GSDEMO/hostshare" ]; then
+    mkdir hostshare
+    cd hostshare
+    echo "This is a shared directory." >> README
+    echo "You can access it through the guest: /hostshare." >> README
+    echo "And you can access it through the host: .../GSDEMO/hostshare." >> README
+    fi
+  EOH
+  environment ({ 'http_proxy' => Chef::Config[:http_proxy] })
+end
